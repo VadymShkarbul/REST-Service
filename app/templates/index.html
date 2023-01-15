@@ -12,7 +12,7 @@
   <div class="row justify-content-center">
     <h2>AWS S3 Bucket Files</h2>
     <a class="btn btn-primary btn-lg btn-block"
-       href="{{ url_for('upload_file') }}">Upload new file</a><br>
+       href="{{ url_for('upload_file') }}">Upload file</a><br>
     <table class="table">
       <thead class="thead-light">
       <tr>
@@ -22,20 +22,19 @@
       </thead>
       <tbody>
       {% if files %}
-      {% for file in files %}
-        <tr>
-          <td>{{ file.Key }}</td>
-          <td>
-            <a href="{{ url_for('download', file_name=file.Key) }}">Download</a> |
-            {#        <a href="{{ url_for('update_file', file_name=file.Key) }}">Update</a> |#}
-            <a href="{{ url_for('delete', file_name=file.Key) }}">Delete</a>
-          </td>
-        </tr>
-      {% endfor %}
+        {% for file in files %}
+          <tr>
+            <td>{{ file.Key }}</td>
+            <td>
+              <a href="{{ url_for('download', file_name=file.Key) }}">Download</a> |
+              <a href="{{ url_for('delete', file_name=file.Key) }}">Delete</a>
+            </td>
+          </tr>
+        {% endfor %}
       {% else %}
-      <tr>
-      <td><h3>No files in bucket</h3></td>
-      </tr>
+        <tr>
+          <td><h3>No files in bucket</h3></td>
+        </tr>
       {% endif %}
       </tbody>
     </table>
