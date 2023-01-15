@@ -14,4 +14,5 @@ pip install -r requirements.txt
 cd app
 flask run
 ```
+<img width="1001" alt="" src="https://user-images.githubusercontent.com/111114742/212558231-8ace3892-4b26-4fdd-be7e-1700515a1b4b.png">
 
