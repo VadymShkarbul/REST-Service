@@ -12,13 +12,6 @@ BUCKET = app.config["S3_BUCKET_NAME"]
 EXTRA_ARGS = {"ContentType": "application/octet-stream"}
 
 
-# def check_file_exists(file_name):
-#     try:
-#         response = app.s3.list_objects_v2(Bucket=BUCKET, Prefix=file_name)
-#         return response['KeyCount'] > 0
-#     except:
-#         return False
-
 def check_file_size(key, local_path):
     s3_file_size = app.s3.head_object(Bucket=BUCKET, Key=key)["ContentLength"]
     local_file_size = os.path.getsize(local_path)
@@ -41,11 +34,10 @@ def upload_file():
 
 @app.route("/upload", methods=["POST", "PUT"])
 def upload():
+    file = request.files["file"]
     if request.files["file"].filename == "":
         return jsonify({"error": "No file selected"})
     else:
-        file = request.files["file"]
-        print(file.filename)
         file_name = secure_filename(file.filename)
         response = app.s3.list_objects_v2(Bucket=BUCKET, Prefix=file_name)
         if 'Contents' in response:
