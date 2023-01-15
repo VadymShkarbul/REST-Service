@@ -1,6 +1,6 @@
 import boto3
 from flask import Flask
-from config import Config
+from app.config import Config, create_dir
 
 
 app = Flask(__name__)
@@ -12,3 +12,6 @@ app.s3 = boto3.client(
     aws_access_key_id=app.config["AWS_ACCESS_KEY"],
     aws_secret_access_key=app.config["AWS_SECRET_KEY"],
 )
+
+create_dir("uploads")
+create_dir("downloads")

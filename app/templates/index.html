@@ -2,29 +2,45 @@
 <html>
 <head>
   <title>Display files</title>
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+        crossorigin="anonymous">
 </head>
 <body>
-<h1>File List</h1>
-<a href="{{ url_for('upload_file') }}">Upload new file</a><br>
-<table>
-  <thead>
-  <tr>
-    <th>File Name</th>
-    <th>Actions</th>
-  </tr>
-  </thead>
-  <tbody>
-  {% for file in files %}
-    <tr>
-      <td>{{ file.Key }}</td>
-      <td>
-        <a href="{{ url_for('download', file_name=file.Key) }}">Download</a>
-{#        <a href="{{ url_for('update_file', file_name=file.Key) }}">Update</a>#}
-        <a href="{{ url_for('delete', file_name=file.Key) }}">Delete</a>
-      </td>
-    </tr>
-  {% endfor %}
-  </tbody>
-</table>
+<div class="col-md-8">
+  <div class="row justify-content-center">
+    <h2>AWS S3 Bucket Files</h2>
+    <a class="btn btn-primary btn-lg btn-block"
+       href="{{ url_for('upload_file') }}">Upload new file</a><br>
+    <table class="table">
+      <thead class="thead-light">
+      <tr>
+        <th>File Name</th>
+        <th>Actions</th>
+      </tr>
+      </thead>
+      <tbody>
+      {% if files %}
+      {% for file in files %}
+        <tr>
+          <td>{{ file.Key }}</td>
+          <td>
+            <a href="{{ url_for('download', file_name=file.Key) }}">Download</a> |
+            {#        <a href="{{ url_for('update_file', file_name=file.Key) }}">Update</a> |#}
+            <a href="{{ url_for('delete', file_name=file.Key) }}">Delete</a>
+          </td>
+        </tr>
+      {% endfor %}
+      {% else %}
+      <tr>
+      <td><h3>No files in bucket</h3></td>
+      </tr>
+      {% endif %}
+      </tbody>
+    </table>
+  </div>
+</div>
+</div>
 </body>
 </html>
